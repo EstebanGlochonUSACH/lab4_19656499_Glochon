@@ -13,6 +13,7 @@ public class UsuarioMinimo extends javax.swing.JPanel implements Displayable {
 
     /**
      * Creates new form UsuarioMinimo
+     * @param usuario
      */
     public UsuarioMinimo(Usuario usuario) {
         initComponents();
@@ -119,18 +120,33 @@ public class UsuarioMinimo extends javax.swing.JPanel implements Displayable {
     private javax.swing.JLabel labelUsuario;
     // End of variables declaration//GEN-END:variables
 
+   /**
+     * Lista de registros de listener para eventos.
+     */
     protected EventListenerList listenerList = new EventListenerList();
 
+    /**
+     * Registra un nuevo listener.
+     * @param listener
+     */
     @Override
     public void addListener(DisplayEventListener listener) {
         listenerList.add(DisplayEventListener.class, listener);
     }
 
+    /**
+     * Elimina un listener antes registrado.
+     * @param listener
+     */
     @Override
     public void removeListener(DisplayEventListener listener) {
         listenerList.remove(DisplayEventListener.class, listener);
     }
 
+    /**
+     * Emite un evento en el contexto de la instacia del objeto.
+     * @param evt
+     */
     @Override
     public void emitEvent(DisplayEvent evt) {
         for(DisplayEventListener listener: listenerList.getListeners(DisplayEventListener.class)) {

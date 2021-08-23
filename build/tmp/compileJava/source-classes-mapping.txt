@@ -71,26 +71,14 @@ lab4_19656499_Glochon/Publicacion.java
  lab4_19656499_Glochon.Publicacion$Tipo
 lab4_19656499_Glochon/Likeable.java
  lab4_19656499_Glochon.Likeable
+lab4_19656499_Glochon/PublicacionShared.java
+ lab4_19656499_Glochon.PublicacionShared
 lab4_19656499_Glochon/gui/MostrarUsuario.java
  lab4_19656499_Glochon.gui.MostrarUsuario
  lab4_19656499_Glochon.gui.MostrarUsuario$1
  lab4_19656499_Glochon.gui.MostrarUsuario$2
 lab4_19656499_Glochon/SocialNetwork.java
  lab4_19656499_Glochon.SocialNetwork
-lab4_19656499_Glochon/PublicacionShared.java
- lab4_19656499_Glochon.PublicacionShared
-lab4_19656499_Glochon/gui/MostrarComentario.java
- lab4_19656499_Glochon.gui.MostrarComentario
- lab4_19656499_Glochon.gui.MostrarComentario$1
- lab4_19656499_Glochon.gui.MostrarComentario$2
- lab4_19656499_Glochon.gui.MostrarComentario$3
- lab4_19656499_Glochon.gui.MostrarComentario$4
- lab4_19656499_Glochon.gui.MostrarComentario$5
-lab4_19656499_Glochon/gui/CrearPublicacion.java
- lab4_19656499_Glochon.gui.CrearPublicacion
- lab4_19656499_Glochon.gui.CrearPublicacion$1
- lab4_19656499_Glochon.gui.CrearPublicacion$2
- lab4_19656499_Glochon.gui.CrearPublicacion$3
 lab4_19656499_Glochon/gui/MostrarPublicacion.java
  lab4_19656499_Glochon.gui.MostrarPublicacion
  lab4_19656499_Glochon.gui.MostrarPublicacion$1
@@ -98,9 +86,6 @@ lab4_19656499_Glochon/gui/MostrarPublicacion.java
  lab4_19656499_Glochon.gui.MostrarPublicacion$3
  lab4_19656499_Glochon.gui.MostrarPublicacion$4
  lab4_19656499_Glochon.gui.MostrarPublicacion$5
-lab4_19656499_Glochon/gui/BuscarComentarios.java
- lab4_19656499_Glochon.gui.BuscarComentarios
- lab4_19656499_Glochon.gui.BuscarComentarios$1
 lab4_19656499_Glochon/Main.java
  lab4_19656499_Glochon.Main
 lab4_19656499_Glochon/gui/MainWindow.java
@@ -128,3 +113,18 @@ lab4_19656499_Glochon/gui/MainWindow.java
  lab4_19656499_Glochon.gui.MainWindow$7
  lab4_19656499_Glochon.gui.MainWindow$8
  lab4_19656499_Glochon.gui.MainWindow$9
+lab4_19656499_Glochon/gui/CrearPublicacion.java
+ lab4_19656499_Glochon.gui.CrearPublicacion
+ lab4_19656499_Glochon.gui.CrearPublicacion$1
+ lab4_19656499_Glochon.gui.CrearPublicacion$2
+ lab4_19656499_Glochon.gui.CrearPublicacion$3
+lab4_19656499_Glochon/gui/BuscarComentarios.java
+ lab4_19656499_Glochon.gui.BuscarComentarios
+ lab4_19656499_Glochon.gui.BuscarComentarios$1
+lab4_19656499_Glochon/gui/MostrarComentario.java
+ lab4_19656499_Glochon.gui.MostrarComentario
+ lab4_19656499_Glochon.gui.MostrarComentario$1
+ lab4_19656499_Glochon.gui.MostrarComentario$2
+ lab4_19656499_Glochon.gui.MostrarComentario$3
+ lab4_19656499_Glochon.gui.MostrarComentario$4
+ lab4_19656499_Glochon.gui.MostrarComentario$5

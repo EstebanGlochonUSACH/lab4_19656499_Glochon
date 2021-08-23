@@ -15,6 +15,7 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
 
     /**
      * Creates new form CrearPublicacion
+     * @param socialNetwork
      */
     public CrearPublicacion(SocialNetwork socialNetwork) {
         this.socialNetwork = socialNetwork;
@@ -167,18 +168,33 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Lista de registros de listener para eventos.
+     */
     protected EventListenerList listenerList = new EventListenerList();
 
+    /**
+     * Registra un nuevo listener.
+     * @param listener
+     */
     @Override
     public void addListener(SubmitEventListener listener) {
         listenerList.add(SubmitEventListener.class, listener);
     }
 
+    /**
+     * Elimina un listener antes registrado.
+     * @param listener
+     */
     @Override
     public void removeListener(SubmitEventListener listener) {
         listenerList.remove(SubmitEventListener.class, listener);
     }
 
+    /**
+     * Emite un evento en el contexto de la instacia del objeto.
+     * @param evt
+     */
     @Override
     public void emitEvent(SubmitEvent evt) {
         for(SubmitEventListener listener: listenerList.getListeners(SubmitEventListener.class)) {

@@ -21,7 +21,8 @@ public class CrearComentario extends javax.swing.JPanel implements Submitable {
     }
 
     /**
-     *
+     * Actualiza el valor de la propiedad "publicacion" internamente.
+     * @param pub
      */
     public void setInfo(Publicacion pub) {
         if(pub == null){
@@ -33,7 +34,12 @@ public class CrearComentario extends javax.swing.JPanel implements Submitable {
     }
 
     /**
-     *
+     * Actualiza el valor de las propiedades "publicacion" y "comentario"
+     * internamente.
+     * @param pub
+     * @param comment
+     * @param pub
+     * @param comment
      */
     public void setInfo(Publicacion pub, Comentario comment) {
         if(pub == null){
@@ -138,18 +144,33 @@ public class CrearComentario extends javax.swing.JPanel implements Submitable {
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Lista de registros de listener para eventos.
+     */
     protected EventListenerList listenerList = new EventListenerList();
 
+    /**
+     * Registra un nuevo listener.
+     * @param listener
+     */
     @Override
     public void addListener(SubmitEventListener listener) {
         listenerList.add(SubmitEventListener.class, listener);
     }
 
+    /**
+     * Elimina un listener antes registrado.
+     * @param listener
+     */
     @Override
     public void removeListener(SubmitEventListener listener) {
         listenerList.remove(SubmitEventListener.class, listener);
     }
 
+    /**
+     * Emite un evento en el contexto de la instacia del objeto.
+     * @param evt
+     */
     @Override
     public void emitEvent(SubmitEvent evt) {
         for(SubmitEventListener listener: listenerList.getListeners(SubmitEventListener.class)) {

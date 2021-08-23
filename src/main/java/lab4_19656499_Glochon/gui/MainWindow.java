@@ -35,6 +35,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form MainWindow
+     * @param socialNetwork
      */
     public MainWindow(SocialNetwork socialNetwork) {
         this.socialNetwork = socialNetwork;

@@ -8,6 +8,8 @@ public class InfoDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form InfoDialog
+     * @param parent
+     * @param content
      */
     public InfoDialog(java.awt.Frame parent, String content) {
         super(parent, true);

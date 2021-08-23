@@ -18,17 +18,25 @@ public class MostrarPublicacion extends javax.swing.JPanel implements Displayabl
 
     /**
      * Creates new form MostrarPublicacion
+     * @param socialNetwork
      */
     public MostrarPublicacion(SocialNetwork socialNetwork) {
         this.socialNetwork = socialNetwork;
         initComponents();
     }
 
+    /**
+     * Redefine el valor de la propiedad "publicacion" del objeto, internamente.
+     * @param publicacion
+     */
     public void setPublicacion(Publicacion publicacion) {
         this.publicacion = publicacion;
         acutualizarInfo();
     }
     
+    /**
+     * Actualiza la informacion que se muestra en la ventana.
+     */
     public void acutualizarInfo(){
         String pibId = String.valueOf(publicacion.getId());
         labelPubId.setText("#" + pibId);
@@ -335,18 +343,33 @@ public class MostrarPublicacion extends javax.swing.JPanel implements Displayabl
     private javax.swing.JTextPane textAreaContenido;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Lista de registros de listener para eventos.
+     */
     protected EventListenerList listenerList = new EventListenerList();
 
+    /**
+     * Registra un nuevo listener.
+     * @param listener
+     */
     @Override
     public void addListener(DisplayEventListener listener) {
         listenerList.add(DisplayEventListener.class, listener);
     }
 
+    /**
+     * Elimina un listener antes registrado.
+     * @param listener
+     */
     @Override
     public void removeListener(DisplayEventListener listener) {
         listenerList.remove(DisplayEventListener.class, listener);
     }
 
+    /**
+     * Emite un evento en el contexto de la instacia del objeto.
+     * @param evt
+     */
     @Override
     public void emitEvent(DisplayEvent evt) {
         for(DisplayEventListener listener: listenerList.getListeners(DisplayEventListener.class)) {

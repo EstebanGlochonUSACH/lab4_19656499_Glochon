@@ -15,17 +15,25 @@ public class MostrarUsuario extends javax.swing.JPanel implements Displayable {
 
     /**
      * Creates new form MostrarUsuario
+     * @param socialNetwork
      */
     public MostrarUsuario(SocialNetwork socialNetwork) {
         this.socialNetwork = socialNetwork;
         initComponents();
     }
 
+    /**
+     * Redefine el valor de la propiedad "usuario" del objeto, internamente.
+     * @param comentario
+     */
     public void setUsuario(Usuario user) {
         this.usuario = user;
         acutualizarInfo();
     }
 
+    /**
+     * Actualiza la informacion que se muestra en la ventana.
+     */
     public void acutualizarInfo() {
         String name = usuario.toString();
         labelName.setText(name);
@@ -194,18 +202,33 @@ public class MostrarUsuario extends javax.swing.JPanel implements Displayable {
     private javax.swing.JLabel labelTitulo;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Lista de registros de listener para eventos.
+     */
     protected EventListenerList listenerList = new EventListenerList();
 
+    /**
+     * Registra un nuevo listener.
+     * @param listener
+     */
     @Override
     public void addListener(DisplayEventListener listener) {
         listenerList.add(DisplayEventListener.class, listener);
     }
 
+    /**
+     * Elimina un listener antes registrado.
+     * @param listener
+     */
     @Override
     public void removeListener(DisplayEventListener listener) {
         listenerList.remove(DisplayEventListener.class, listener);
     }
 
+    /**
+     * Emite un evento en el contexto de la instacia del objeto.
+     * @param evt
+     */
     @Override
     public void emitEvent(DisplayEvent evt) {
         for(DisplayEventListener listener: listenerList.getListeners(DisplayEventListener.class)) {

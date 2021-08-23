@@ -32,6 +32,11 @@ public abstract class Paginacion<Item> extends javax.swing.JPanel {
         toggleButtons();
     }
     
+    /**
+     * Actualiza la lista de elementos a paginar.
+     * @param items
+     * @param itemsPerPage
+     */
     public void loadItems(Collection<Item> items, int itemsPerPage){
         this.items = items;
         this.itemsPerPage = itemsPerPage;
@@ -63,8 +68,9 @@ public abstract class Paginacion<Item> extends javax.swing.JPanel {
     }
     
     /**
-     *
-     * @return
+     * Se obtienen una sub-lista de los elementos que se deben mostrar en la
+     * pagina actual.
+     * @return ArrayList(Item)
      */
     protected ArrayList<Item> getItems(){
         Iterator<Item> iter = items.iterator();
@@ -86,8 +92,18 @@ public abstract class Paginacion<Item> extends javax.swing.JPanel {
         return result;
     }
     
+    /**
+     * Transforma un modelo dado en una componente JPanel a mostrar en la 
+     * ventana.
+     * @param item
+     * @return JPanel
+     */
     abstract protected javax.swing.JPanel transformItem(Item item);
     
+    /**
+     * Recorre los items y los transforma en JPanel para luego agregarlos en
+     * la ventana.
+     */
     protected void addItemWidgets(){
         ArrayList<Item> items = getItems();
         Iterator<Item> iter = items.iterator();
