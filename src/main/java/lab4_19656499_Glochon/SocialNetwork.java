@@ -55,41 +55,42 @@ public class SocialNetwork {
     }
 
     /**
-     *
-     * @return
+     * Devuelve la fecha de creacion de la red social.
+     * @return LocalDate
      */
     public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
 
     /**
-     *
+     * Devuelve la instancia de un usuario que concida con la id entregada.
      * @param id
-     * @return
+     * @return Usuario
      */
     public Usuario getUsuario(int id){
         return this.usuariosIndex.get(id);
     }
 
     /**
-     *
+     * Devuelve la instancia de un usuario que concida con el nombre de usaurio
+     * que fue dado.
      * @param username
-     * @return
+     * @return Usuario
      */
     public Usuario getUsuario(String username){
         return this.usuarios.get(username);
     }
 
     /**
-     *
-     * @return
+     * Entrega una coleccion de todos los usuarios en la red social.
+     * @return Collection(Usuario)
      */
     public Collection<Usuario> getUsuarios(){
         return this.usuarios.values();
     }
 
     /**
-     *
+     * Entrega una coleccion de todas las publicaciones en la red social.
      * @return
      */
     public Collection<Publicacion> getPublicaciones(){
@@ -97,15 +98,16 @@ public class SocialNetwork {
     }
 
     /**
-     *
-     * @return
+     * Devuelve true si hay una sesion iniciada en la red social, en caso
+     * contrario, false.
+     * @return boolean
      */
     public boolean hasSesion() {
         return(this.sesion != null);
     }
     
     /**
-     *
+     * Agregar una publicacion al registro de publicaciones de la red social.
      * @param pub
      */
     protected void addPublicacion(Publicacion pub){
@@ -113,7 +115,7 @@ public class SocialNetwork {
     }
     
     /**
-     *
+     * Agrega un comentario al registro de comentarios de la red social.
      * @param comment
      */
     protected void addComentario(Comentario comment){
@@ -121,36 +123,37 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Obitiene una publicacion de la red social a partir de su ID.
      * @param id
-     * @return
+     * @return Publicacion
      */
     public Publicacion getPublicacion(int id){
         return this.publicaciones.get(id);
     }
 
     /**
-     *
+     * Obitiene un comentario de la red social a partir de su ID.
      * @param id
-     * @return
+     * @return Comentario
      */
     public Comentario getComentario(int id){
         return this.comentarios.get(id);
     }
 
     /**
-     *
-     * @return
+     * Obtiene la instancia del usuario que tiene su sesion iniciada.
+     * @return Usuario
      */
     public Usuario getSesion() {
         return sesion;
     }
 
     /**
-     *
+     * Registra un nuevo usuario. Retorna true si se pudo realizar esta
+     * operacion correctamente, en caso contrario false.
      * @param username
      * @param password
-     * @return
+     * @return boolean
      */
     public boolean register(String username, String password){
         // Comprobar si el nombre de usuario ya esta ocupado.
@@ -165,10 +168,12 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Intenta iniciar sesion con las credenciales proporcionadas, si existe el
+     * usuario y su contraseña coincide, se inicia la sesion y se retorna true,
+     * en caso contrario se retorna false.
      * @param username
      * @param password
-     * @return
+     * @return boolean
      */
     public boolean login(String username, String password) {
         // Comprobar que exista el usuario.
@@ -185,7 +190,7 @@ public class SocialNetwork {
 
     /**
      * Cierra la sesion abierta en la instancia de SocialNetwork.
-     * @return
+     * @return boolean
      */
     public boolean logout() {
         if(this.hasSesion()){
@@ -196,7 +201,22 @@ public class SocialNetwork {
     }
     
     /**
-     *
+     * Funcion utilitaria que sirve para comprobar si una ID existe en un array
+     * de IDs (int).
+     * @param array
+     * @param id
+     * @return boolean
+     */
+    static public boolean arrayHasId(int[] array, int id){
+        for(int i = 0; i < array.length; ++i){
+            if(array[i] == id) return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Dados ciertos parametros de entrada, crea una nueva publicacion asi como
+     * las asociaciones requeridas (autor, usuarios objetivos, etc...)
      * @param tipo
      * @param contenido
      * @return Publicacion
@@ -211,15 +231,9 @@ public class SocialNetwork {
         return null;
     }
     
-    static public boolean arrayHasId(int[] array, int id){
-        for(int i = 0; i < array.length; ++i){
-            if(array[i] == id) return true;
-        }
-        return false;
-    }
-    
     /**
-     *
+     * Dados ciertos parametros de entrada, crea una nueva publicacion asi como
+     * las asociaciones requeridas (autor, usuarios objetivos, etc...)
      * @param tipo
      * @param contenido
      * @param targets
@@ -255,7 +269,8 @@ public class SocialNetwork {
     }
     
     /**
-     *
+     * Dados ciertos parametros de entrada, crea una nueva publicacion asi como
+     * las asociaciones requeridas (autor, usuarios objetivos, etc...)
      * @param tipo
      * @param contenido
      * @param targets
@@ -279,9 +294,11 @@ public class SocialNetwork {
     }
     
     /**
-     *
+     * Metodo que crea las asociaciones necesarias para que un usuario "siga" a
+     * otro. Devuelve un valor booleano dependiendo de si se puedo realizar
+     * esta accion.
      * @param username
-     * @return
+     * @return boolean
      */
     public boolean follow(String username){
         if(this.hasSesion()){
@@ -292,9 +309,11 @@ public class SocialNetwork {
     }
     
     /**
-     *
+     * Metodo que crea las asociaciones necesarias para que un usuario "siga" a
+     * otro. Devuelve un valor booleano dependiendo de si se puedo realizar
+     * esta accion.
      * @param targetUser
-     * @return
+     * @return boolean
      */
     public boolean follow(Usuario targetUser){
         if(this.hasSesion() && this.sesion != targetUser){
@@ -305,7 +324,7 @@ public class SocialNetwork {
     }
     
     /**
-     *
+     * Comparte una publicacion con otros usuarios objetivos.
      * @param pubId
      * @param targets
      * @return PublicacionShared
@@ -319,7 +338,7 @@ public class SocialNetwork {
     }
     
     /**
-     *
+     * Comparte una publicacion con otros usuarios objetivos.
      * @param pub
      * @param targets
      * @return PublicacionShared
@@ -349,7 +368,7 @@ public class SocialNetwork {
     }
     
     /**
-     *
+     * Comparte una publicacion con otros usuarios objetivos.
      * @param pubId
      * @param targets
      * @return PublicacionShared
@@ -363,7 +382,7 @@ public class SocialNetwork {
     }
     
     /**
-     *
+     * Comparte una publicacion con otros usuarios objetivos.
      * @param pub
      * @param targets
      * @return PublicacionShared
@@ -382,7 +401,8 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Crea y registra un nuevo comentario en la red social. Ademas crea las
+     * asociaciones necesarias.
      * @param pubId
      * @param contenido
      * @return Comentario o NULL
@@ -399,7 +419,8 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Crea y registra un nuevo comentario en la red social. Ademas crea las
+     * asociaciones necesarias.
      * @param pub
      * @param contenido
      * @return Comentario o NULL
@@ -415,7 +436,8 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Crea y registra un nuevo comentario en la red social. Ademas crea las
+     * asociaciones necesarias.
      * @param pubId
      * @param parentCommentId
      * @param contenido
@@ -433,7 +455,8 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Crea y registra un nuevo comentario en la red social. Ademas crea las
+     * asociaciones necesarias.
      * @param parent
      * @param contenido
      * @return Comentario o NULL
@@ -449,9 +472,10 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Crea y registra un reaccion "like" en la red social junto con sus
+     * asociaciones necesarias.
      * @param pubId
-     * @return
+     * @return boolean
      */
     public boolean like(int pubId){
         if(this.hasSesion()){
@@ -466,9 +490,10 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Crea y registra un reaccion "like" en la red social junto con sus
+     * asociaciones necesarias.
      * @param pub
-     * @return
+     * @return boolean
      */
     public boolean like(Publicacion pub){
         if(this.hasSesion()){
@@ -482,9 +507,10 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Crea y registra un reaccion "like" en la red social junto con sus
+     * asociaciones necesarias.
      * @param comment
-     * @return
+     * @return boolean
      */
     public boolean like(Comentario comment){
         if(this.hasSesion()){
@@ -498,10 +524,12 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Comprueba que si una lista de publicaciones es viral (que cumpluca con un
+     * criterio minimo de veces compartidas). Retorna una lista filtrada con
+     * las publicaciones que cumplen el criterio dado.
      * @param publicaciones
      * @param minimo
-     * @return
+     * @return ArrayList(Integer)
      */
     public ArrayList<Integer> isViral(int[] publicaciones, int minimo){
         Publicacion pub;
@@ -517,10 +545,12 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Comprueba que si una lista de publicaciones es viral (que cumpluca con un
+     * criterio minimo de veces compartidas). Retorna una lista filtrada con
+     * las publicaciones que cumplen el criterio dado.
      * @param publicaciones
      * @param minimo
-     * @return
+     * @return ArrayList(Integer)
      */
     public ArrayList<Publicacion> isViral(Publicacion[] publicaciones, int minimo){
         ArrayList<Publicacion> result = new ArrayList<>();
@@ -533,9 +563,10 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Busca en la red social, todas las publicaciones que contengan el termino
+     * dado.
      * @param query
-     * @return
+     * @return ArrayList(Publicacion)
      */
     public ArrayList<Publicacion> searchPublicaciones(String query){
         ArrayList<Publicacion> result = new ArrayList<>();
@@ -558,9 +589,10 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Busca en la red social, todos los comentarios que contengan el termino
+     * dado.
      * @param query
-     * @return
+     * @return ArrayList(Comentario)
      */
     public ArrayList<Comentario> searchComentarios(String query){
         ArrayList<Comentario> result = new ArrayList<>();
@@ -583,9 +615,10 @@ public class SocialNetwork {
     }
 
     /**
-     *
-     * @param query
-     * @return
+     * Busca en la red social, todos los comentarios que sean sub comentarios
+     * del comentario pasado como parametro.
+     * @param comentario
+     * @return ArrayList(Comentario)
      */
     public ArrayList<Comentario> searchSubComentarios(Comentario comentario){
         ArrayList<Comentario> result = new ArrayList<>();
@@ -604,9 +637,10 @@ public class SocialNetwork {
     }
 
     /**
-     *
+     * Busca en la red social, todos los usuarios a los que su nombre de 
+     * usuario conoincida total o parcialmente con el termino dado.
      * @param query
-     * @return
+     * @return ArrayList(Usuario)
      */
     public ArrayList<Usuario> searchUsuarios(String query){
         ArrayList<Usuario> result = new ArrayList<>();
