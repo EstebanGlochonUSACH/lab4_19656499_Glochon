@@ -260,6 +260,7 @@ public class MainWindow extends javax.swing.JFrame {
         btnCrearPublicacion = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         panelBottom = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -283,6 +284,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         btnShowPublicaciones.setText("Ver Publicaciones");
+        btnShowPublicaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnShowPublicacionesMouseClicked(evt);
+            }
+        });
 
         btnCrearPublicacion.setText("Crear Publicacion");
         btnCrearPublicacion.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -305,6 +311,8 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Ver Pub. Virales");
+
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -317,7 +325,8 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(btnShowPublicaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCrearPublicacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         menuPanelLayout.setVerticalGroup(
@@ -331,7 +340,9 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 461, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 432, Short.MAX_VALUE)
                 .addComponent(btnLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegister)
@@ -359,7 +370,7 @@ public class MainWindow extends javax.swing.JFrame {
         dynamicPanel.setLayout(dynamicPanelLayout);
         dynamicPanelLayout.setHorizontalGroup(
             dynamicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 682, Short.MAX_VALUE)
+            .addGap(0, 757, Short.MAX_VALUE)
         );
         dynamicPanelLayout.setVerticalGroup(
             dynamicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -487,6 +498,12 @@ public class MainWindow extends javax.swing.JFrame {
         panel6.setVisible(true);
     }//GEN-LAST:event_jButton2MouseClicked
 
+    private void btnShowPublicacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPublicacionesMouseClicked
+        Collection<Publicacion> pubs = socialNetwork.getPublicaciones();
+        panel7.loadItems(pubs, 10);
+        showMostrarPublicaciones();
+    }//GEN-LAST:event_btnShowPublicacionesMouseClicked
+
     private void showMostrarPublicaciones() {
         hidePaneles();
         panel7.setVisible(true);
@@ -504,6 +521,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnShowPublicaciones;
     private javax.swing.JPanel dynamicPanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;

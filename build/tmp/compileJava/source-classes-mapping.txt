@@ -54,24 +54,11 @@ lab4_19656499_Glochon/gui/MostrarPublicacion.java
 lab4_19656499_Glochon/gui/PublicacionMinimo.java
  lab4_19656499_Glochon.gui.PublicacionMinimo
  lab4_19656499_Glochon.gui.PublicacionMinimo$1
-lab4_19656499_Glochon/gui/MainWindow.java
- lab4_19656499_Glochon.gui.MainWindow
- lab4_19656499_Glochon.gui.MainWindow$1
- lab4_19656499_Glochon.gui.MainWindow$10
- lab4_19656499_Glochon.gui.MainWindow$11
- lab4_19656499_Glochon.gui.MainWindow$12
- lab4_19656499_Glochon.gui.MainWindow$13
- lab4_19656499_Glochon.gui.MainWindow$14
- lab4_19656499_Glochon.gui.MainWindow$15
- lab4_19656499_Glochon.gui.MainWindow$16
- lab4_19656499_Glochon.gui.MainWindow$2
- lab4_19656499_Glochon.gui.MainWindow$3
- lab4_19656499_Glochon.gui.MainWindow$4
- lab4_19656499_Glochon.gui.MainWindow$5
- lab4_19656499_Glochon.gui.MainWindow$6
- lab4_19656499_Glochon.gui.MainWindow$7
- lab4_19656499_Glochon.gui.MainWindow$8
- lab4_19656499_Glochon.gui.MainWindow$9
+lab4_19656499_Glochon/gui/MostrarComentario.java
+ lab4_19656499_Glochon.gui.MostrarComentario
+ lab4_19656499_Glochon.gui.MostrarComentario$1
+ lab4_19656499_Glochon.gui.MostrarComentario$2
+ lab4_19656499_Glochon.gui.MostrarComentario$3
 lab4_19656499_Glochon/gui/MostrarUsuarios.java
  lab4_19656499_Glochon.gui.MostrarUsuarios
  lab4_19656499_Glochon.gui.MostrarUsuarios$1
@@ -97,16 +84,30 @@ lab4_19656499_Glochon/Publicacion.java
  lab4_19656499_Glochon.Publicacion$Tipo
 lab4_19656499_Glochon/Like.java
  lab4_19656499_Glochon.Like
-lab4_19656499_Glochon/Main.java
- lab4_19656499_Glochon.Main
-lab4_19656499_Glochon/gui/ComentarioMinimo.java
- lab4_19656499_Glochon.gui.ComentarioMinimo
- lab4_19656499_Glochon.gui.ComentarioMinimo$1
-lab4_19656499_Glochon/gui/MostrarComentario.java
- lab4_19656499_Glochon.gui.MostrarComentario
- lab4_19656499_Glochon.gui.MostrarComentario$1
- lab4_19656499_Glochon.gui.MostrarComentario$2
- lab4_19656499_Glochon.gui.MostrarComentario$3
 lab4_19656499_Glochon/gui/CrearComentario.java
  lab4_19656499_Glochon.gui.CrearComentario
  lab4_19656499_Glochon.gui.CrearComentario$1
+lab4_19656499_Glochon/gui/ComentarioMinimo.java
+ lab4_19656499_Glochon.gui.ComentarioMinimo
+ lab4_19656499_Glochon.gui.ComentarioMinimo$1
+lab4_19656499_Glochon/Main.java
+ lab4_19656499_Glochon.Main
+lab4_19656499_Glochon/gui/MainWindow.java
+ lab4_19656499_Glochon.gui.MainWindow
+ lab4_19656499_Glochon.gui.MainWindow$1
+ lab4_19656499_Glochon.gui.MainWindow$10
+ lab4_19656499_Glochon.gui.MainWindow$11
+ lab4_19656499_Glochon.gui.MainWindow$12
+ lab4_19656499_Glochon.gui.MainWindow$13
+ lab4_19656499_Glochon.gui.MainWindow$14
+ lab4_19656499_Glochon.gui.MainWindow$15
+ lab4_19656499_Glochon.gui.MainWindow$16
+ lab4_19656499_Glochon.gui.MainWindow$17
+ lab4_19656499_Glochon.gui.MainWindow$2
+ lab4_19656499_Glochon.gui.MainWindow$3
+ lab4_19656499_Glochon.gui.MainWindow$4
+ lab4_19656499_Glochon.gui.MainWindow$5
+ lab4_19656499_Glochon.gui.MainWindow$6
+ lab4_19656499_Glochon.gui.MainWindow$7
+ lab4_19656499_Glochon.gui.MainWindow$8
+ lab4_19656499_Glochon.gui.MainWindow$9
