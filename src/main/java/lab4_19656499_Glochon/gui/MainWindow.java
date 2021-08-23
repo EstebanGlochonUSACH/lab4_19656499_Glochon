@@ -31,6 +31,7 @@ public class MainWindow extends javax.swing.JFrame {
     private final MostrarComentarios panel11 = new MostrarComentarios();
     private final MostrarComentario panel12;
     private final BuscarVirales panel13 = new BuscarVirales();
+    private final BuscarComentarios panel14 = new BuscarComentarios();
 
     /**
      * Creates new form MainWindow
@@ -63,6 +64,7 @@ public class MainWindow extends javax.swing.JFrame {
         dynamicPanel.add(panel11, cons);
         dynamicPanel.add(panel12, cons);
         dynamicPanel.add(panel13, cons);
+        dynamicPanel.add(panel14, cons);
         panel1.setVisible(true);
         panel2.setVisible(false);
         panel3.setVisible(false);
@@ -76,6 +78,7 @@ public class MainWindow extends javax.swing.JFrame {
         panel11.setVisible(false);
         panel12.setVisible(false);
         panel13.setVisible(false);
+        panel14.setVisible(false);
         
         java.awt.Frame main = this;
         
@@ -91,8 +94,7 @@ public class MainWindow extends javax.swing.JFrame {
                         btnLogin.setText("Logout");
                         btnRegister.setEnabled(false);
                         btnProfile.setEnabled(true);
-                        dialog = new InfoDialog(main, "La sesion se inicio correctamente!");
-                        dialog.setVisible(true);
+                        showUsuario(socialNetwork.getSesion());
                     }
                     else{
                         dialog = new InfoDialog(main, "No se pudo iniciar la sesion!");
@@ -159,6 +161,9 @@ public class MainWindow extends javax.swing.JFrame {
                 if(evt.isContext("ver")){
                     Collection<Comentario> items = pub.getComentarios(false);
                     showMostrarComentarios(items);
+                }
+                else if(evt.isContext("ver-publicacion")){
+                    showPublicacion(pub);
                 }
                 else if(evt.isContext("crear")){
                     showCrearComentario(pub, null);
@@ -310,6 +315,17 @@ public class MainWindow extends javax.swing.JFrame {
                 }
             }
         });
+        
+        panel14.addListener(new SubmitEventListener() {
+            @Override
+            public void onSubmit(SubmitEvent evt) {
+                if(evt.fields.containsKey("busqueda")){
+                    String busqueda = (String) evt.fields.get("busqueda");
+                    ArrayList<Comentario> comments = socialNetwork.searchComentarios(busqueda);
+                    showMostrarComentarios(comments);
+                }
+            }
+        });
     }
 
     /**
@@ -330,6 +346,7 @@ public class MainWindow extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btnProfile = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         panelBottom = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -395,6 +412,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("Buscar Comentarios");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -409,7 +433,8 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         menuPanelLayout.setVerticalGroup(
@@ -425,7 +450,9 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 403, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 374, Short.MAX_VALUE)
                 .addComponent(btnProfile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLogin)
@@ -502,6 +529,7 @@ public class MainWindow extends javax.swing.JFrame {
         panel11.setVisible(false);
         panel12.setVisible(false);
         panel13.setVisible(false);
+        panel14.setVisible(false);
     }
     
     private void showPublicacion(Publicacion pub) {
@@ -603,6 +631,11 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnProfileMouseClicked
 
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        hidePaneles();
+        panel14.setVisible(true);
+    }//GEN-LAST:event_jButton3MouseClicked
+
     private void showMostrarPublicaciones() {
         hidePaneles();
         panel7.setVisible(true);
@@ -628,6 +661,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel dynamicPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

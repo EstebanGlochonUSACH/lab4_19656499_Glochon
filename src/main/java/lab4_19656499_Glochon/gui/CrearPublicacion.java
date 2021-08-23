@@ -130,9 +130,6 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
                 dialog.addListener(new SubmitEventListener() {
                     @Override
                     public void onSubmit(SubmitEvent evt) {
-                        InfoDialog dialog = new InfoDialog(null, "=> selected submit event <=");
-                        dialog.setVisible(true);
-
                         if(!evt.fields.containsKey("usuarios")) return;
                         Usuario[] usuarios = (Usuario[])evt.fields.get("usuarios");
                         jTextArea1.setText("");

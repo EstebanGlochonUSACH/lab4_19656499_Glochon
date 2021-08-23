@@ -211,6 +211,13 @@ public class SocialNetwork {
         return null;
     }
     
+    static public boolean arrayHasId(int[] array, int id){
+        for(int i = 0; i < array.length; ++i){
+            if(array[i] == id) return true;
+        }
+        return false;
+    }
+    
     /**
      *
      * @param tipo
@@ -236,7 +243,7 @@ public class SocialNetwork {
             while(iter.hasNext()){
                 auxUser = iter.next();
                 int userId = auxUser.getId();
-                found = IntStream.of(targets).anyMatch(n -> n == userId);
+                found = SocialNetwork.arrayHasId(targets, userId);
                 if(found){
                     auxUser.addPublicacion(pub);
                 }
@@ -321,6 +328,7 @@ public class SocialNetwork {
         if(this.hasSesion() && targets.length > 0){
             PublicacionShared pubShared = new PublicacionShared(this.sesion, pub);
             this.addPublicacion(pubShared);
+            this.getSesion().addPublicacion(pubShared);
 
             boolean found;
             Collection<Usuario> collec = this.usuarios.values();
@@ -330,7 +338,7 @@ public class SocialNetwork {
             while(iter.hasNext()){
                 auxUser = iter.next();
                 int userId = auxUser.getId();
-                found = IntStream.of(targets).anyMatch(n -> n == userId);
+                found = SocialNetwork.arrayHasId(targets, userId);
                 if(found){
                     auxUser.addPublicacion(pubShared);
                 }
@@ -358,13 +366,17 @@ public class SocialNetwork {
      *
      * @param pub
      * @param targets
-     * @return
+     * @return PublicacionShared
      */
     public PublicacionShared share(Publicacion pub, Usuario[] targets){
         if(this.hasSesion() && targets.length > 0){
             PublicacionShared pubShared = new PublicacionShared(this.sesion, pub);
             this.addPublicacion(pubShared);
+            this.getSesion().addPublicacion(pubShared);
+
             for(int i = 0; i < targets.length; ++i) targets[i].addPublicacion(pubShared);
+            
+            return pubShared;
         }
         return null;
     }

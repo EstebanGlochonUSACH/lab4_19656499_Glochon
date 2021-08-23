@@ -3,6 +3,7 @@ package lab4_19656499_Glochon.gui;
 import java.util.ArrayList;
 import javax.swing.event.EventListenerList;
 import lab4_19656499_Glochon.Publicacion;
+import lab4_19656499_Glochon.PublicacionShared;
 import lab4_19656499_Glochon.SocialNetwork;
 import lab4_19656499_Glochon.Usuario;
 
@@ -49,6 +50,13 @@ public class MostrarPublicacion extends javax.swing.JPanel implements Displayabl
         
         String comentarios = ((Integer)publicacion.totalComentarios()).toString();
         labelComentarios.setText(comentarios);
+        
+        if(publicacion.getTipo() == Publicacion.Tipo.SHARED){
+            labelTitulo.setText("Shared");
+        }
+        else{
+            labelTitulo.setText("Publicacion");
+        }
     }
 
     /**
@@ -214,8 +222,8 @@ public class MostrarPublicacion extends javax.swing.JPanel implements Displayabl
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -224,7 +232,7 @@ public class MostrarPublicacion extends javax.swing.JPanel implements Displayabl
                         .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -257,8 +265,8 @@ public class MostrarPublicacion extends javax.swing.JPanel implements Displayabl
             
             if(users.size() > 0){
                 SeleccionarUsuarios dialog = new SeleccionarUsuarios(null, users);
-                dialog.setVisible(true);
 
+                MostrarPublicacion self = this;
                 dialog.addListener(new SubmitEventListener() {
                     @Override
                     public void onSubmit(SubmitEvent evt) {
@@ -267,10 +275,11 @@ public class MostrarPublicacion extends javax.swing.JPanel implements Displayabl
                         InfoDialog dialog;
                         Usuario[] users = (Usuario[])evt.fields.get("usuarios");
                         if(users.length == 0) return;
+                        
+                        PublicacionShared pub = socialNetwork.share(publicacion, users);
 
-                        if(socialNetwork.share(publicacion, users)){
-                            dialog = new InfoDialog(null, "Se compartio la publicacion exitosamente!");
-                            dialog.setVisible(true);
+                        if(pub != null){
+                            emitEvent(new DisplayEvent(this, pub, "ver-publicacion"));
                         }
                         else{
                             dialog = new InfoDialog(null, "No se pudo compartir la publicacion!");
@@ -278,6 +287,8 @@ public class MostrarPublicacion extends javax.swing.JPanel implements Displayabl
                         }
                     }
                 });
+
+                dialog.setVisible(true);
             }
         }
     }//GEN-LAST:event_jButton1MouseClicked
