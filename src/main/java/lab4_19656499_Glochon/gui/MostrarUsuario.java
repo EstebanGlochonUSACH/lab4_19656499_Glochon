@@ -23,6 +23,7 @@ public class MostrarUsuario extends javax.swing.JPanel implements Displayable {
 
     void setUsuario(Usuario user) {
         this.usuario = user;
+        acutualizarInfo();
     }
 
     void acutualizarInfo() {

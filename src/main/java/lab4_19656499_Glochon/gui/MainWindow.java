@@ -27,6 +27,8 @@ public class MainWindow extends javax.swing.JFrame {
     private final MostrarUsuarios panel8 = new MostrarUsuarios();
     private final MostrarUsuario panel9;
     private final CrearComentario panel10 = new CrearComentario();
+    private final MostrarComentarios panel11 = new MostrarComentarios();
+    private final MostrarComentario panel12;
 
     /**
      * Creates new form MainWindow
@@ -35,6 +37,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.socialNetwork = socialNetwork;
         this.panel4 = new MostrarPublicacion(socialNetwork);
         this.panel9 = new MostrarUsuario(socialNetwork);
+        this.panel12 = new MostrarComentario(socialNetwork);
 
         setTitle("SocialNetwork Client");
         initComponents();
@@ -54,6 +57,8 @@ public class MainWindow extends javax.swing.JFrame {
         dynamicPanel.add(panel8, cons);
         dynamicPanel.add(panel9, cons);
         dynamicPanel.add(panel10, cons);
+        dynamicPanel.add(panel11, cons);
+        dynamicPanel.add(panel12, cons);
         panel1.setVisible(true);
         panel2.setVisible(false);
         panel3.setVisible(false);
@@ -64,6 +69,8 @@ public class MainWindow extends javax.swing.JFrame {
         panel8.setVisible(false);
         panel9.setVisible(false);
         panel10.setVisible(false);
+        panel11.setVisible(false);
+        panel12.setVisible(false);
         
         java.awt.Frame main = this;
         
@@ -206,6 +213,30 @@ public class MainWindow extends javax.swing.JFrame {
                     else{
                         showComentario(comment);
                     }
+                }
+            }
+        });
+        
+        panel11.addListener(new DisplayEventListener() {
+            @Override
+            public void onDisplay(DisplayEvent evt) {
+                Comentario comment = (Comentario)evt.item;
+                if(comment != null){
+                    showComentario(comment);
+                }
+            }
+        });
+        
+        panel12.addListener(new DisplayEventListener() {
+            @Override
+            public void onDisplay(DisplayEvent evt) {
+                if(evt.isContext("ver")){
+                    Comentario comment = (Comentario)evt.item;
+                    showComentario(comment);
+                }
+                else if(evt.isContext("crear")){
+                    Comentario comment = (Comentario)evt.item;
+                    showCrearComentario(comment.getPublicacion(), comment);
                 }
             }
         });
@@ -370,22 +401,26 @@ public class MainWindow extends javax.swing.JFrame {
         panel8.setVisible(false);
         panel9.setVisible(false);
         panel10.setVisible(false);
+        panel11.setVisible(false);
+        panel12.setVisible(false);
     }
     
     private void showPublicacion(Publicacion pub) {
         panel4.setPublicacion(pub);
-        panel4.acutualizarInfo();
-        
         hidePaneles();
         panel4.setVisible(true);
     }
     
     private void showUsuario(Usuario user) {
         panel9.setUsuario(user);
-        panel9.acutualizarInfo();
-        
         hidePaneles();
         panel9.setVisible(true);
+    }
+    
+    private void showComentario(Comentario comment) {
+        panel12.setComentario(comment);
+        hidePaneles();
+        panel12.setVisible(true);
     }
     
     private void showRegister(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showRegister

@@ -570,6 +570,27 @@ public class SocialNetwork {
      * @param query
      * @return
      */
+    public ArrayList<Comentario> searchSubComentarios(Comentario comentario){
+        ArrayList<Comentario> result = new ArrayList<>();
+        Collection<Comentario> collec = this.comentarios.values();
+        Iterator<Comentario> iter = collec.iterator();
+
+        Comentario aux;
+        while(iter.hasNext()){
+            aux = iter.next();
+            if(aux.getParentComment() == comentario){
+                result.add(aux);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     *
+     * @param query
+     * @return
+     */
     public ArrayList<Usuario> searchUsuarios(String query){
         ArrayList<Usuario> result = new ArrayList<>();
         Collection<Usuario> collec = this.usuarios.values();

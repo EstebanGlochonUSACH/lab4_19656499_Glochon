@@ -25,8 +25,8 @@ public class MostrarPublicacion extends javax.swing.JPanel implements Displayabl
 
     public void setPublicacion(Publicacion publicacion) {
         this.publicacion = publicacion;
+        acutualizarInfo();
     }
-    
     
     public void acutualizarInfo(){
         String pibId = String.valueOf(publicacion.getId());
