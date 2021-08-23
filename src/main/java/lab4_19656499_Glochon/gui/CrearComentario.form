@@ -19,9 +19,9 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jLabel3" alignment="0" pref="438" max="32767" attributes="0"/>
+                  <Component id="jLabel3" alignment="1" pref="438" max="32767" attributes="0"/>
                   <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="jButton4" min="-2" pref="162" max="-2" attributes="0"/>
@@ -53,7 +53,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="sansserif" size="18" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Crear Publicacion"/>
+        <Property name="text" type="java.lang.String" value="Crear Comentario"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">

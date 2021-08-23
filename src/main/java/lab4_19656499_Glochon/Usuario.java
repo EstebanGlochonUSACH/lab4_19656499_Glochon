@@ -246,4 +246,13 @@ public class Usuario extends AutoIncrementable {
     public String toString() {
         return "@" + this.getUsername();
     }
+
+    /**
+     * Comprueba si el usuario esta siguiendo a otro.
+     * @param usuario
+     * @return
+     */
+    public boolean hasFollowing(Usuario usuario) {
+        return this.following.contains(usuario);
+    }
 }

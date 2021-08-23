@@ -1,39 +1,59 @@
-/*
- * The MIT License
- *
- * Copyright 2021 EstebanGlochonUSACH [https://github.com/EstebanGlochonUSACH].
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 package lab4_19656499_Glochon.gui;
+
+import javax.swing.event.EventListenerList;
+import lab4_19656499_Glochon.SocialNetwork;
+import lab4_19656499_Glochon.Usuario;
 
 /**
  *
  * @author EstebanGlochonUSACH [https://github.com/EstebanGlochonUSACH]
  */
-public class MostrarUsuario extends javax.swing.JPanel {
+public class MostrarUsuario extends javax.swing.JPanel implements Displayable {
+    
+    private final SocialNetwork socialNetwork;
+    private Usuario usuario;
 
     /**
      * Creates new form MostrarUsuario
      */
-    public MostrarUsuario() {
+    public MostrarUsuario(SocialNetwork socialNetwork) {
+        this.socialNetwork = socialNetwork;
         initComponents();
+    }
+
+    void setUsuario(Usuario user) {
+        this.usuario = user;
+    }
+
+    void acutualizarInfo() {
+        String name = usuario.toString();
+        labelName.setText(name);
+
+        String follower = ((Integer)usuario.totalFollowers()).toString();
+        labelFollowers.setText(follower);
+
+        String following = ((Integer)usuario.totalFollowing()).toString();
+        labelFollowing.setText(following);
+
+        String pubs = ((Integer)usuario.totalPublicaciones()).toString();
+        labelPublicaciones.setText(pubs);
+        
+        if(socialNetwork.hasSesion()){
+            jButton2.setEnabled(true);
+            Usuario self = socialNetwork.getSesion();
+            if(self.hasFollowing(usuario)){
+                jButton2.setEnabled(false);
+                jButton2.setText("Unfollow");
+            }
+            else{
+                jButton2.setEnabled(true);
+                jButton2.setText("Follow");
+            }
+        }
+        else{
+            jButton2.setEnabled(false);
+            jButton2.setText("Follow");
+        }
     }
 
     /**
@@ -45,19 +65,150 @@ public class MostrarUsuario extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        labelTitulo = new javax.swing.JLabel();
+        labelName = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        labelFollowers = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        labelFollowing = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        labelPublicaciones = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        labelTitulo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        labelTitulo.setText("Usuario:");
+        jPanel1.add(labelTitulo);
+
+        labelName.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        labelName.setText("@user");
+        jPanel1.add(labelName);
+
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel2.setText("Followers:");
+        jPanel3.add(jLabel2);
+
+        labelFollowers.setText("0");
+        jPanel3.add(labelFollowers);
+
+        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel3.setText("Following:");
+        jPanel4.add(jLabel3);
+
+        labelFollowing.setText("0");
+        jPanel4.add(labelFollowing);
+
+        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel4.setText("Publicaciones");
+        jPanel5.add(jLabel4);
+
+        labelPublicaciones.setText("0");
+        jPanel5.add(labelPublicaciones);
+
+        jButton1.setText("Ver Publicaciones");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
+        jButton2.setText("Follow");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        emitEvent(new DisplayEvent(this, usuario));
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        if(socialNetwork.hasSesion()){
+            socialNetwork.follow(usuario);
+            acutualizarInfo();
+        }
+    }//GEN-LAST:event_jButton2MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JLabel labelFollowers;
+    private javax.swing.JLabel labelFollowing;
+    private javax.swing.JLabel labelName;
+    private javax.swing.JLabel labelPublicaciones;
+    private javax.swing.JLabel labelTitulo;
     // End of variables declaration//GEN-END:variables
+
+    protected EventListenerList listenerList = new EventListenerList();
+
+    @Override
+    public void addListener(DisplayEventListener listener) {
+        listenerList.add(DisplayEventListener.class, listener);
+    }
+
+    @Override
+    public void removeListener(DisplayEventListener listener) {
+        listenerList.remove(DisplayEventListener.class, listener);
+    }
+
+    @Override
+    public void emitEvent(DisplayEvent evt) {
+        for(DisplayEventListener listener: listenerList.getListeners(DisplayEventListener.class)) {
+            listener.onDisplay(evt);
+        }
+    }
 }

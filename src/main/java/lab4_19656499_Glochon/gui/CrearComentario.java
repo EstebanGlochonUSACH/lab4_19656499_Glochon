@@ -1,18 +1,47 @@
 package lab4_19656499_Glochon.gui;
 
 import javax.swing.event.EventListenerList;
+import lab4_19656499_Glochon.Comentario;
+import lab4_19656499_Glochon.Publicacion;
 
 /**
  *
  * @author EstebanGlochonUSACH [https://github.com/EstebanGlochonUSACH]
  */
-public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
+public class CrearComentario extends javax.swing.JPanel implements Submitable {
+    
+    private Publicacion publicacion;
+    private Comentario comentario;
 
     /**
-     * Creates new form CrearPublicacion
+     * Creates new form CrearComentario
      */
-    public CrearPublicacion() {
+    public CrearComentario() {
         initComponents();
+    }
+
+    /**
+     *
+     */
+    public void setInfo(Publicacion pub) {
+        if(pub == null){
+            InfoDialog dialog = new InfoDialog(null, "La publicacion no esta definida!");
+            dialog.setVisible(true);
+        }
+        this.publicacion = pub;
+        this.comentario = null;
+    }
+
+    /**
+     *
+     */
+    public void setInfo(Publicacion pub, Comentario comment) {
+        if(pub == null){
+            InfoDialog dialog = new InfoDialog(null, "La publicacion no esta definida!");
+            dialog.setVisible(true);
+        }
+        this.publicacion = pub;
+        this.comentario = comment;
     }
 
     /**
@@ -31,7 +60,7 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
         jButton4 = new javax.swing.JButton();
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel3.setText("Crear Publicacion");
+        jLabel3.setText("Crear Comentario");
 
         jLabel1.setText("Contenido");
 
@@ -53,9 +82,9 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -77,6 +106,12 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        if(publicacion == null){
+            InfoDialog dialog = new InfoDialog(null, "La publicacion no esta definida!");
+            dialog.setVisible(true);
+            return;
+        }
+
         String content = jTextArea1.getText().trim();
 
         if(content.length() == 0){
@@ -84,11 +119,13 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
             dialog.setVisible(true);
             return;
         }
-        
+
         jTextArea1.setText("");
-        
+
         SubmitEvent event = new SubmitEvent(this);
         event.fields.put("contenido", content);
+        event.fields.put("publicacion", publicacion);
+        event.fields.put("comentario", comentario);
         emitEvent(event);
     }//GEN-LAST:event_jButton4MouseClicked
 

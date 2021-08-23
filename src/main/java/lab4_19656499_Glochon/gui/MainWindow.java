@@ -3,6 +3,8 @@ package lab4_19656499_Glochon.gui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import lab4_19656499_Glochon.Comentario;
 import lab4_19656499_Glochon.Publicacion;
 import lab4_19656499_Glochon.SocialNetwork;
 import lab4_19656499_Glochon.Usuario;
@@ -23,7 +25,8 @@ public class MainWindow extends javax.swing.JFrame {
     private final BuscarUsuarios panel6 = new BuscarUsuarios();
     private final MostrarPublicaciones panel7 = new MostrarPublicaciones();
     private final MostrarUsuarios panel8 = new MostrarUsuarios();
-    private final MostrarUsuario panel9 = new MostrarUsuario();
+    private final MostrarUsuario panel9;
+    private final CrearComentario panel10 = new CrearComentario();
 
     /**
      * Creates new form MainWindow
@@ -31,6 +34,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow(SocialNetwork socialNetwork) {
         this.socialNetwork = socialNetwork;
         this.panel4 = new MostrarPublicacion(socialNetwork);
+        this.panel9 = new MostrarUsuario(socialNetwork);
 
         setTitle("SocialNetwork Client");
         initComponents();
@@ -49,6 +53,7 @@ public class MainWindow extends javax.swing.JFrame {
         dynamicPanel.add(panel7, cons);
         dynamicPanel.add(panel8, cons);
         dynamicPanel.add(panel9, cons);
+        dynamicPanel.add(panel10, cons);
         panel1.setVisible(true);
         panel2.setVisible(false);
         panel3.setVisible(false);
@@ -58,6 +63,7 @@ public class MainWindow extends javax.swing.JFrame {
         panel7.setVisible(false);
         panel8.setVisible(false);
         panel9.setVisible(false);
+        panel10.setVisible(false);
         
         java.awt.Frame main = this;
         
@@ -119,11 +125,23 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         
+        panel4.addListener(new DisplayEventListener() {
+            @Override
+            public void onDisplay(DisplayEvent evt) {
+                if(evt.isContext("ver")){
+                    // TODO
+                }
+                else if(evt.isContext("crear")){
+                    Publicacion pub = (Publicacion)evt.item;
+                    showCrearComentario(pub, null);
+                }
+            }
+        });
+        
         panel5.addListener(new SubmitEventListener() {
             @Override
             public void onSubmit(SubmitEvent evt) {
                 if(evt.fields.containsKey("busqueda")){
-                    InfoDialog dialog;
                     String busqueda = (String) evt.fields.get("busqueda");
                     ArrayList<Publicacion> pubs = socialNetwork.searchPublicaciones(busqueda);
                     panel7.loadItems(pubs, 10);
@@ -145,9 +163,49 @@ public class MainWindow extends javax.swing.JFrame {
         panel8.addListener(new DisplayEventListener() {
             @Override
             public void onDisplay(DisplayEvent evt) {
-                Usuario pub = (Usuario)evt.item;
-                if(pub != null){
-                    showUsuario(pub);
+                Usuario user = (Usuario)evt.item;
+                if(user != null){
+                    showUsuario(user);
+                }
+            }
+        });
+        
+        panel9.addListener(new DisplayEventListener() {
+            @Override
+            public void onDisplay(DisplayEvent evt) {
+                Usuario user = (Usuario)evt.item;
+                if(user != null){
+                    LinkedList<Publicacion> pubs = user.getPublicaciones();
+                    panel7.loadItems(pubs, 10);
+                    showMostrarPublicaciones();
+                }
+            }
+        });
+        
+        panel10.addListener(new SubmitEventListener() {
+            @Override
+            public void onSubmit(SubmitEvent evt) {
+                if(evt.fields.containsKey("contenido")){
+                    InfoDialog dialog;
+                    String contenido = (String) evt.fields.get("contenido");
+                    Publicacion pub = (Publicacion) evt.fields.get("publicacion");
+                    Comentario padre = (Comentario) evt.fields.get("comentario");
+                    
+                    Comentario comment;
+                    if(padre != null){
+                        comment = socialNetwork.comment(pub, contenido);
+                    }
+                    else{
+                        comment = socialNetwork.comment(padre, contenido);
+                    }
+                     
+                    if(pub == null){
+                        dialog = new InfoDialog(main, "No se pudo crear la publicacion!");
+                        dialog.setVisible(true);
+                    }
+                    else{
+                        showComentario(comment);
+                    }
                 }
             }
         });
@@ -311,6 +369,7 @@ public class MainWindow extends javax.swing.JFrame {
         panel7.setVisible(false);
         panel8.setVisible(false);
         panel9.setVisible(false);
+        panel10.setVisible(false);
     }
     
     private void showPublicacion(Publicacion pub) {
@@ -321,7 +380,10 @@ public class MainWindow extends javax.swing.JFrame {
         panel4.setVisible(true);
     }
     
-    private void showUsuario(Usuario user) {        
+    private void showUsuario(Usuario user) {
+        panel9.setUsuario(user);
+        panel9.acutualizarInfo();
+        
         hidePaneles();
         panel9.setVisible(true);
     }
@@ -340,10 +402,28 @@ public class MainWindow extends javax.swing.JFrame {
         }
         else{
             showLogin();
-            InfoDialog dialog = new InfoDialog(this, "Para crear una publicacion, una sesion debe estar iniciada!");
+            InfoDialog dialog = new InfoDialog(this, "Para crear una publicacion, se debe iniciar sesion!");
             dialog.setVisible(true);
         }
     }//GEN-LAST:event_showCrearPublicacion
+
+    private void showCrearComentario(Publicacion pub, Comentario comment) {                                      
+        if(socialNetwork.hasSesion()){
+            hidePaneles();
+            if(comment == null){
+                panel10.setInfo(pub);
+            }
+            else{
+                panel10.setInfo(pub, comment);
+            }
+            panel10.setVisible(true);
+        }
+        else{
+            showLogin();
+            InfoDialog dialog = new InfoDialog(this, "Para crear un comentario, se debe iniciar sesion!");
+            dialog.setVisible(true);
+        }
+    }                                     
 
     private void showLogin() {
         hidePaneles();

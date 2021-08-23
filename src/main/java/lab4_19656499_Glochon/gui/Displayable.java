@@ -4,11 +4,22 @@ import java.util.EventListener;
 import java.util.EventObject;
 
 class DisplayEvent extends EventObject {
+    private String context = null;
     public final Object item;
 
     public DisplayEvent(Object source, Object item) {
         super(source);
         this.item = item;
+    }
+
+    public DisplayEvent(Object source, Object item, String context) {
+        super(source);
+        this.item = item;
+        this.context = context;
+    }
+
+    public boolean isContext(String value) {
+        return (context == null ? value == null : context.equals(value));
     }
 }
 

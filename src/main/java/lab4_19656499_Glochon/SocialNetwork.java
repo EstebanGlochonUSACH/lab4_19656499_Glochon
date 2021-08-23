@@ -368,33 +368,33 @@ public class SocialNetwork {
      *
      * @param pubId
      * @param contenido
-     * @return
+     * @return Comentario o NULL
      */
-    public boolean comment(int pubId, String contenido){
+    public Comentario comment(int pubId, String contenido){
         if(this.hasSesion()){
             Publicacion pub = this.getPublicacion(pubId);
             Comentario comment = new Comentario(this.sesion, pub, contenido);
             this.addComentario(comment);
             pub.addComentario(comment);
-            return true;
+            return comment;
         }
-        return false;
+        return null;
     }
 
     /**
      *
      * @param pub
      * @param contenido
-     * @return
+     * @return Comentario o NULL
      */
-    public boolean comment(Publicacion pub, String contenido){
+    public Comentario comment(Publicacion pub, String contenido){
         if(this.hasSesion()){
             Comentario comment = new Comentario(this.sesion, pub, contenido);
             this.addComentario(comment);
             pub.addComentario(comment);
-            return true;
+            return comment;
         }
-        return false;
+        return null;
     }
 
     /**
@@ -402,33 +402,33 @@ public class SocialNetwork {
      * @param pubId
      * @param parentCommentId
      * @param contenido
-     * @return
+     * @return Comentario o NULL
      */
-    public boolean comment(int pubId, int parentCommentId, String contenido){
+    public Comentario comment(int pubId, int parentCommentId, String contenido){
         if(this.hasSesion()){
             Comentario parent = this.getComentario(parentCommentId);
             Comentario comment = new Comentario(this.sesion, parent, contenido);
             this.addComentario(comment);
             comment.getPublicacion().addComentario(comment);
-            return true;
+            return comment;
         }
-        return false;
+        return null;
     }
 
     /**
      *
      * @param parent
      * @param contenido
-     * @return
+     * @return Comentario o NULL
      */
-    public boolean comment(Comentario parent, String contenido){
+    public Comentario comment(Comentario parent, String contenido){
         if(this.hasSesion()){
             Comentario comment = new Comentario(this.sesion, parent, contenido);
             this.addComentario(comment);
             comment.getPublicacion().addComentario(comment);
-            return true;
+            return comment;
         }
-        return false;
+        return null;
     }
 
     /**

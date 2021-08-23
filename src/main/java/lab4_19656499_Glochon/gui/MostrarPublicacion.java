@@ -1,6 +1,7 @@
 package lab4_19656499_Glochon.gui;
 
 import java.util.ArrayList;
+import javax.swing.event.EventListenerList;
 import lab4_19656499_Glochon.Publicacion;
 import lab4_19656499_Glochon.SocialNetwork;
 import lab4_19656499_Glochon.Usuario;
@@ -9,7 +10,7 @@ import lab4_19656499_Glochon.Usuario;
  *
  * @author EstebanGlochonUSACH [https://github.com/EstebanGlochonUSACH]
  */
-public class MostrarPublicacion extends javax.swing.JPanel {
+public class MostrarPublicacion extends javax.swing.JPanel implements Displayable {
     
     private final SocialNetwork socialNetwork;
     private Publicacion publicacion;
@@ -29,7 +30,7 @@ public class MostrarPublicacion extends javax.swing.JPanel {
     
     public void acutualizarInfo(){
         String pibId = String.valueOf(publicacion.getId());
-        labelPubId.setText(pibId);
+        labelPubId.setText("#" + pibId);
 
         String autor = publicacion.getAutor().toString();
         labelAutor.setText(autor);
@@ -183,9 +184,19 @@ public class MostrarPublicacion extends javax.swing.JPanel {
         jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButton4.setText("Comentar");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
         jPanel11.add(jButton4);
 
         jButton3.setText("Ver Comentarios");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
         jPanel11.add(jButton3);
 
         jPanel6.add(jPanel11);
@@ -270,6 +281,14 @@ public class MostrarPublicacion extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        emitEvent(new DisplayEvent(this, publicacion, "crear"));
+    }//GEN-LAST:event_jButton4MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        emitEvent(new DisplayEvent(this, publicacion, "ver"));
+    }//GEN-LAST:event_jButton3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -303,4 +322,23 @@ public class MostrarPublicacion extends javax.swing.JPanel {
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JTextPane textAreaContenido;
     // End of variables declaration//GEN-END:variables
+
+    protected EventListenerList listenerList = new EventListenerList();
+
+    @Override
+    public void addListener(DisplayEventListener listener) {
+        listenerList.add(DisplayEventListener.class, listener);
+    }
+
+    @Override
+    public void removeListener(DisplayEventListener listener) {
+        listenerList.remove(DisplayEventListener.class, listener);
+    }
+
+    @Override
+    public void emitEvent(DisplayEvent evt) {
+        for(DisplayEventListener listener: listenerList.getListeners(DisplayEventListener.class)) {
+            listener.onDisplay(evt);
+        }
+    }
 }
