@@ -37,6 +37,7 @@ public class InfoDialog extends javax.swing.JDialog {
             }
         });
 
+        textArea.setEditable(false);
         jScrollPane2.setViewportView(textArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

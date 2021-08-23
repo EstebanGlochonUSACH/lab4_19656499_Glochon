@@ -129,6 +129,7 @@ public class MostrarComentario extends javax.swing.JPanel implements Displayable
 
         jLabel3.setText("Contenido:");
 
+        textAreaContenido.setEditable(false);
         jScrollPane2.setViewportView(textAreaContenido);
 
         jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));

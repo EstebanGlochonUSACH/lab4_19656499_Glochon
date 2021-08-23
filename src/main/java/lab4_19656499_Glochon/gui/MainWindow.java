@@ -30,6 +30,7 @@ public class MainWindow extends javax.swing.JFrame {
     private final CrearComentario panel10 = new CrearComentario();
     private final MostrarComentarios panel11 = new MostrarComentarios();
     private final MostrarComentario panel12;
+    private final BuscarVirales panel13 = new BuscarVirales();
 
     /**
      * Creates new form MainWindow
@@ -60,6 +61,7 @@ public class MainWindow extends javax.swing.JFrame {
         dynamicPanel.add(panel10, cons);
         dynamicPanel.add(panel11, cons);
         dynamicPanel.add(panel12, cons);
+        dynamicPanel.add(panel13, cons);
         panel1.setVisible(true);
         panel2.setVisible(false);
         panel3.setVisible(false);
@@ -72,6 +74,7 @@ public class MainWindow extends javax.swing.JFrame {
         panel10.setVisible(false);
         panel11.setVisible(false);
         panel12.setVisible(false);
+        panel13.setVisible(false);
         
         java.awt.Frame main = this;
         
@@ -239,6 +242,24 @@ public class MainWindow extends javax.swing.JFrame {
                 else if(evt.isContext("crear")){
                     Comentario comment = (Comentario)evt.item;
                     showCrearComentario(comment.getPublicacion(), comment);
+                }
+            }
+        });
+        
+        panel13.addListener(new SubmitEventListener() {
+            @Override
+            public void onSubmit(SubmitEvent evt) {
+                if(evt.fields.containsKey("minimo")){
+                    int minimo = (int)evt.fields.get("minimo");
+                    
+                    Collection<Publicacion> pubs = socialNetwork.getPublicaciones();
+                    Publicacion[] pubArray = new Publicacion[pubs.size()];
+                    pubArray = pubs.toArray(pubArray);
+                    
+                    ArrayList<Publicacion> items = socialNetwork.isViral(pubArray, minimo);
+
+                    panel7.loadItems(items, 10);
+                    showMostrarPublicaciones();
                 }
             }
         });
@@ -416,6 +437,7 @@ public class MainWindow extends javax.swing.JFrame {
         panel10.setVisible(false);
         panel11.setVisible(false);
         panel12.setVisible(false);
+        panel13.setVisible(false);
     }
     
     private void showPublicacion(Publicacion pub) {

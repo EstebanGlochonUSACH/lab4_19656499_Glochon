@@ -119,6 +119,7 @@ public class MostrarPublicacion extends javax.swing.JPanel implements Displayabl
 
         jLabel3.setText("Contenido:");
 
+        textAreaContenido.setEditable(false);
         jScrollPane1.setViewportView(textAreaContenido);
 
         jPanel4.setLayout(new java.awt.GridLayout(1, 2));
