@@ -301,23 +301,23 @@ public class SocialNetwork {
      *
      * @param pubId
      * @param targets
-     * @return
+     * @return PublicacionShared
      */
-    public boolean share(int pubId, int[] targets){
+    public PublicacionShared share(int pubId, int[] targets){
         if(this.hasSesion() && targets.length > 0){
             Publicacion pub = this.sesion.findPublicacion(pubId, true);
             if(pub != null) return this.share(pub, targets);
         }
-        return false;
+        return null;
     }
     
     /**
      *
      * @param pub
      * @param targets
-     * @return
+     * @return PublicacionShared
      */
-    public boolean share(Publicacion pub, int[] targets){
+    public PublicacionShared share(Publicacion pub, int[] targets){
         if(this.hasSesion() && targets.length > 0){
             PublicacionShared pubShared = new PublicacionShared(this.sesion, pub);
             this.addPublicacion(pubShared);
@@ -335,22 +335,23 @@ public class SocialNetwork {
                     auxUser.addPublicacion(pubShared);
                 }
             }
+            return pubShared;
         }
-        return false;
+        return null;
     }
     
     /**
      *
      * @param pubId
      * @param targets
-     * @return
+     * @return PublicacionShared
      */
-    public boolean share(int pubId, Usuario[] targets){
+    public PublicacionShared share(int pubId, Usuario[] targets){
         if(this.hasSesion() && targets.length > 0){
             Publicacion pub = this.sesion.findPublicacion(pubId, true);
             if(pub != null) return this.share(pub, targets);
         }
-        return false;
+        return null;
     }
     
     /**
@@ -359,13 +360,13 @@ public class SocialNetwork {
      * @param targets
      * @return
      */
-    public boolean share(Publicacion pub, Usuario[] targets){
+    public PublicacionShared share(Publicacion pub, Usuario[] targets){
         if(this.hasSesion() && targets.length > 0){
             PublicacionShared pubShared = new PublicacionShared(this.sesion, pub);
             this.addPublicacion(pubShared);
             for(int i = 0; i < targets.length; ++i) targets[i].addPublicacion(pubShared);
         }
-        return false;
+        return null;
     }
 
     /**
