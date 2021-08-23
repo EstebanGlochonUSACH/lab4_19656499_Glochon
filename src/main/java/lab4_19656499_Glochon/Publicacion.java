@@ -1,6 +1,8 @@
 package lab4_19656499_Glochon;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Iterator;
 
@@ -9,7 +11,7 @@ import java.util.Iterator;
  * @author EstebanGlochonUSACH [https://github.com/EstebanGlochonUSACH]
  */
 public class Publicacion extends AutoIncrementable implements Likeable {
-    
+
     /**
      * Clase anidad para definir los valores "Tipos" que pueden tomar las
      * publicaciones.
@@ -94,6 +96,30 @@ public class Publicacion extends AutoIncrementable implements Likeable {
         return comentarios;
     }
 
+    /**
+     * Cuando "subComentarios" es false, retorna una lista de los comentarios
+     * directos de la publicacion (i.e. los que no son sub-comentarios).
+     * @param subComentarios
+     * @return Collection(Comentario)
+     */
+    public Collection<Comentario> getComentarios(boolean subComentarios) {
+        if(subComentarios == false){
+            ArrayList<Comentario> result = new ArrayList<>();
+            Iterator<Comentario> iter = comentarios.iterator();
+
+            Comentario aux;
+            while(iter.hasNext()){
+                aux = iter.next();
+                if(aux.getParentComment() == null){
+                    result.add(aux);
+                }
+            }
+            
+            return result;
+        }
+        return getComentarios();
+    }
+    
     /**
      * Obtener el numero de veces que se compartio la publicacion.
      * @return int

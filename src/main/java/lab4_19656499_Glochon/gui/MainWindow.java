@@ -3,6 +3,7 @@ package lab4_19656499_Glochon.gui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import lab4_19656499_Glochon.Comentario;
 import lab4_19656499_Glochon.Publicacion;
@@ -135,11 +136,12 @@ public class MainWindow extends javax.swing.JFrame {
         panel4.addListener(new DisplayEventListener() {
             @Override
             public void onDisplay(DisplayEvent evt) {
+                Publicacion pub = (Publicacion)evt.item;
                 if(evt.isContext("ver")){
-                    // TODO
+                    Collection<Comentario> items = pub.getComentarios(false);
+                    showMostrarComentarios(items);
                 }
                 else if(evt.isContext("crear")){
-                    Publicacion pub = (Publicacion)evt.item;
                     showCrearComentario(pub, null);
                 }
             }
@@ -488,6 +490,12 @@ public class MainWindow extends javax.swing.JFrame {
     private void showMostrarPublicaciones() {
         hidePaneles();
         panel7.setVisible(true);
+    }
+
+    private void showMostrarComentarios(Collection<Comentario> items) {
+        panel11.loadItems(items, 15);
+        hidePaneles();
+        panel11.setVisible(true);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

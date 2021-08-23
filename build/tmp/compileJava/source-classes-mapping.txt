@@ -28,6 +28,13 @@ lab4_19656499_Glochon/gui/Displayable.java
  lab4_19656499_Glochon.gui.DisplayEvent
  lab4_19656499_Glochon.gui.DisplayEventListener
  lab4_19656499_Glochon.gui.Displayable
+lab4_19656499_Glochon/gui/CrearPublicacion.java
+ lab4_19656499_Glochon.gui.CrearPublicacion
+ lab4_19656499_Glochon.gui.CrearPublicacion$1
+lab4_19656499_Glochon/gui/SeleccionarUsuarios.java
+ lab4_19656499_Glochon.gui.SeleccionarUsuarios
+ lab4_19656499_Glochon.gui.SeleccionarUsuarios$1
+ lab4_19656499_Glochon.gui.SeleccionarUsuarios$2
 lab4_19656499_Glochon/Reaccion.java
  lab4_19656499_Glochon.Reaccion
  lab4_19656499_Glochon.Reaccion$Tipo
@@ -88,10 +95,6 @@ lab4_19656499_Glochon/Likeable.java
 lab4_19656499_Glochon/Publicacion.java
  lab4_19656499_Glochon.Publicacion
  lab4_19656499_Glochon.Publicacion$Tipo
-lab4_19656499_Glochon/gui/SeleccionarUsuarios.java
- lab4_19656499_Glochon.gui.SeleccionarUsuarios
- lab4_19656499_Glochon.gui.SeleccionarUsuarios$1
- lab4_19656499_Glochon.gui.SeleccionarUsuarios$2
 lab4_19656499_Glochon/Like.java
  lab4_19656499_Glochon.Like
 lab4_19656499_Glochon/Main.java
@@ -99,9 +102,6 @@ lab4_19656499_Glochon/Main.java
 lab4_19656499_Glochon/gui/ComentarioMinimo.java
  lab4_19656499_Glochon.gui.ComentarioMinimo
  lab4_19656499_Glochon.gui.ComentarioMinimo$1
-lab4_19656499_Glochon/gui/CrearPublicacion.java
- lab4_19656499_Glochon.gui.CrearPublicacion
- lab4_19656499_Glochon.gui.CrearPublicacion$1
 lab4_19656499_Glochon/gui/MostrarComentario.java
  lab4_19656499_Glochon.gui.MostrarComentario
  lab4_19656499_Glochon.gui.MostrarComentario$1
