@@ -63,6 +63,7 @@
                       <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
                       <Component id="jButton4" alignment="0" pref="188" max="32767" attributes="0"/>
                       <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnProfile" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -81,7 +82,9 @@
                   <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="432" max="32767" attributes="0"/>
+                  <EmptySpace pref="403" max="32767" attributes="0"/>
+                  <Component id="btnProfile" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnRegister" min="-2" max="-2" attributes="0"/>
@@ -143,6 +146,18 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver Pub. Virales"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnProfile">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Mi Perfil"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnProfileMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

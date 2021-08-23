@@ -225,6 +225,8 @@ public class SocialNetwork {
 
             Publicacion pub = new Publicacion(this.sesion, contenido, tipo);
             this.addPublicacion(pub);
+            
+            this.getSesion().addPublicacion(pub);
 
             boolean found;
             Collection<Usuario> collec = this.usuarios.values();
@@ -259,6 +261,8 @@ public class SocialNetwork {
 
             Publicacion pub = new Publicacion(this.sesion, contenido, tipo);
             this.addPublicacion(pub);
+            
+            this.getSesion().addPublicacion(pub);
 
             for(int i = 0; i < targets.length; ++i) targets[i].addPublicacion(pub);
 

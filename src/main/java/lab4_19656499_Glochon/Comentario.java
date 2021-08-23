@@ -108,4 +108,13 @@ public class Comentario extends AutoIncrementable implements Likeable {
     public int totalLikes(){
         return this.likes.size();
     }
+
+    /**
+     * Es true si el comentario tiene un comentario padre (i.e. es subcomentario
+     * de otro comentario).
+     * @return boolean
+     */
+    public boolean isSubcomentario() {
+        return(parent != null);
+    }
 }

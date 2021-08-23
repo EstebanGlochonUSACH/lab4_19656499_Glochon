@@ -32,7 +32,7 @@ public class BuscarPublicaciones extends javax.swing.JPanel implements Submitabl
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel1.setText("Buscar Publicaciones");
 
-        jLabel2.setText("Criterio de Busqueda");
+        jLabel2.setText("Contenido a buscar");
 
         jButton1.setText("Buscar");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {

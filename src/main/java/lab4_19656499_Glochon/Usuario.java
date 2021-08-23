@@ -154,7 +154,7 @@ public class Usuario extends AutoIncrementable {
      * @param pub
      */
     public void addPublicacion(Publicacion pub){
-        if(!this.publicaciones.contains(pub) && pub.getAutor() == this){
+        if(!this.publicaciones.contains(pub)){
             this.publicaciones.addFirst(pub);
         }
     }

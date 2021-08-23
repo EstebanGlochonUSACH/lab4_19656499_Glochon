@@ -20,7 +20,7 @@ public class MainWindow extends javax.swing.JFrame {
     private final GridBagLayout layout = new GridBagLayout();
     private final Login panel1 = new Login();
     private final Register panel2 = new Register();
-    private final CrearPublicacion panel3 = new CrearPublicacion();
+    private final CrearPublicacion panel3;
     private final MostrarPublicacion panel4;
     private final BuscarPublicaciones panel5 = new BuscarPublicaciones();
     private final BuscarUsuarios panel6 = new BuscarUsuarios();
@@ -37,6 +37,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow(SocialNetwork socialNetwork) {
         this.socialNetwork = socialNetwork;
+        this.panel3 = new CrearPublicacion(socialNetwork);
         this.panel4 = new MostrarPublicacion(socialNetwork);
         this.panel9 = new MostrarUsuario(socialNetwork);
         this.panel12 = new MostrarComentario(socialNetwork);
@@ -89,6 +90,7 @@ public class MainWindow extends javax.swing.JFrame {
                         labelSesion.setText(socialNetwork.getSessionUsername());
                         btnLogin.setText("Logout");
                         btnRegister.setEnabled(false);
+                        btnProfile.setEnabled(true);
                         dialog = new InfoDialog(main, "La sesion se inicio correctamente!");
                         dialog.setVisible(true);
                     }
@@ -124,13 +126,27 @@ public class MainWindow extends javax.swing.JFrame {
                 if(evt.fields.containsKey("contenido")){
                     InfoDialog dialog;
                     String contenido = (String) evt.fields.get("contenido");
-                    Publicacion pub = socialNetwork.post(Publicacion.Tipo.TEXT, contenido);
-                    if(pub == null){
-                        dialog = new InfoDialog(main, "No se pudo crear la publicacion!");
-                        dialog.setVisible(true);
+                    
+                    if(evt.fields.containsKey("usuarios")){
+                        Usuario[] usuarios = (Usuario[])evt.fields.get("usuarios");
+                        Publicacion pub = socialNetwork.post(Publicacion.Tipo.TEXT, contenido, usuarios);
+                        if(pub == null){
+                            dialog = new InfoDialog(main, "No se pudo crear la publicacion!");
+                            dialog.setVisible(true);
+                        }
+                        else{
+                            showPublicacion(pub);
+                        }
                     }
                     else{
-                        showPublicacion(pub);
+                        Publicacion pub = socialNetwork.post(Publicacion.Tipo.TEXT, contenido);
+                        if(pub == null){
+                            dialog = new InfoDialog(main, "No se pudo crear la publicacion!");
+                            dialog.setVisible(true);
+                        }
+                        else{
+                            showPublicacion(pub);
+                        }
                     }
                 }
             }
@@ -158,6 +174,18 @@ public class MainWindow extends javax.swing.JFrame {
                     ArrayList<Publicacion> pubs = socialNetwork.searchPublicaciones(busqueda);
                     panel7.loadItems(pubs, 10);
                     showMostrarPublicaciones();
+                }
+            }
+        });
+        
+        panel6.addListener(new SubmitEventListener() {
+            @Override
+            public void onSubmit(SubmitEvent evt) {
+                if(evt.fields.containsKey("busqueda")){
+                    String busqueda = (String) evt.fields.get("busqueda");
+                    ArrayList<Usuario> users = socialNetwork.searchUsuarios(busqueda);
+                    panel8.loadItems(users, 10);
+                    showMostrarUsuarios();
                 }
             }
         });
@@ -197,27 +225,42 @@ public class MainWindow extends javax.swing.JFrame {
         panel10.addListener(new SubmitEventListener() {
             @Override
             public void onSubmit(SubmitEvent evt) {
-                if(evt.fields.containsKey("contenido")){
-                    InfoDialog dialog;
-                    String contenido = (String) evt.fields.get("contenido");
-                    Publicacion pub = (Publicacion) evt.fields.get("publicacion");
-                    Comentario padre = (Comentario) evt.fields.get("comentario");
-                    
-                    Comentario comment;
-                    if(padre != null){
-                        comment = socialNetwork.comment(pub, contenido);
-                    }
-                    else{
-                        comment = socialNetwork.comment(padre, contenido);
-                    }
-                     
-                    if(pub == null){
-                        dialog = new InfoDialog(main, "No se pudo crear la publicacion!");
-                        dialog.setVisible(true);
-                    }
-                    else{
-                        showComentario(comment);
-                    }
+                InfoDialog dialog;
+
+                if(!evt.fields.containsKey("contenido")){
+                    dialog = new InfoDialog(main, "No se pudo crear la publicacion, falta <contenido>!");
+                    dialog.setVisible(true);
+                    return;
+                }
+                String contenido = (String) evt.fields.get("contenido");
+
+                if(!evt.fields.containsKey("publicacion")){
+                    dialog = new InfoDialog(main, "No se pudo crear la publicacion, falta <publicacion>!");
+                    dialog.setVisible(true);
+                    return;
+                }
+                Publicacion pub = (Publicacion) evt.fields.get("publicacion");
+                if(pub == null){
+                    dialog = new InfoDialog(main, "No se pudo crear la publicacion, <publicacion> es NULL!");
+                    dialog.setVisible(true);
+                    return;
+                }
+
+                if(!evt.fields.containsKey("comentario")){
+                    dialog = new InfoDialog(main, "No se pudo crear la publicacion, falta <comentario>!");
+                    dialog.setVisible(true);
+                    return;
+                }
+                Comentario padre = (Comentario) evt.fields.get("comentario");
+                
+                Comentario comment;
+                if(padre == null){
+                    comment = socialNetwork.comment(pub, contenido);
+                    showComentario(comment);
+                }
+                else{
+                    comment = socialNetwork.comment(padre, contenido);
+                    showComentario(comment);
                 }
             }
         });
@@ -235,13 +278,17 @@ public class MainWindow extends javax.swing.JFrame {
         panel12.addListener(new DisplayEventListener() {
             @Override
             public void onDisplay(DisplayEvent evt) {
-                if(evt.isContext("ver")){
+                if(evt.isContext("ver") || evt.isContext("ver-padre")){
                     Comentario comment = (Comentario)evt.item;
                     showComentario(comment);
                 }
                 else if(evt.isContext("crear")){
                     Comentario comment = (Comentario)evt.item;
                     showCrearComentario(comment.getPublicacion(), comment);
+                }
+                else if(evt.isContext("ver-publicacion")){
+                    Publicacion pub = (Publicacion)evt.item;
+                    showPublicacion(pub);
                 }
             }
         });
@@ -282,6 +329,7 @@ public class MainWindow extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnProfile = new javax.swing.JButton();
         panelBottom = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -333,6 +381,19 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         jButton1.setText("Ver Pub. Virales");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
+        btnProfile.setText("Mi Perfil");
+        btnProfile.setEnabled(false);
+        btnProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnProfileMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
@@ -347,7 +408,8 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(btnCrearPublicacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         menuPanelLayout.setVerticalGroup(
@@ -363,7 +425,9 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 432, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 403, Short.MAX_VALUE)
+                .addComponent(btnProfile)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegister)
@@ -506,6 +570,7 @@ public class MainWindow extends javax.swing.JFrame {
             labelSesion.setText("-No hay-");
             btnLogin.setText("Login");
             btnRegister.setEnabled(true);
+            btnProfile.setEnabled(false);
         }
         showLogin();
     }//GEN-LAST:event_btnLoginMouseClicked
@@ -526,9 +591,26 @@ public class MainWindow extends javax.swing.JFrame {
         showMostrarPublicaciones();
     }//GEN-LAST:event_btnShowPublicacionesMouseClicked
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        hidePaneles();
+        panel13.setVisible(true);
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void btnProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfileMouseClicked
+        if(btnProfile.isEnabled() && socialNetwork.hasSesion()){
+            Usuario self = socialNetwork.getSesion();
+            showUsuario(self);
+        }
+    }//GEN-LAST:event_btnProfileMouseClicked
+
     private void showMostrarPublicaciones() {
         hidePaneles();
         panel7.setVisible(true);
+    }
+
+    private void showMostrarUsuarios() {
+        hidePaneles();
+        panel8.setVisible(true);
     }
 
     private void showMostrarComentarios(Collection<Comentario> items) {
@@ -540,6 +622,7 @@ public class MainWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearPublicacion;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnProfile;
     private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnShowPublicaciones;
     private javax.swing.JPanel dynamicPanel;

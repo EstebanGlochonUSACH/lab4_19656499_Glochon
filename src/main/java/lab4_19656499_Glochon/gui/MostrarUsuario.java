@@ -21,12 +21,12 @@ public class MostrarUsuario extends javax.swing.JPanel implements Displayable {
         initComponents();
     }
 
-    void setUsuario(Usuario user) {
+    public void setUsuario(Usuario user) {
         this.usuario = user;
         acutualizarInfo();
     }
 
-    void acutualizarInfo() {
+    public void acutualizarInfo() {
         String name = usuario.toString();
         labelName.setText(name);
 

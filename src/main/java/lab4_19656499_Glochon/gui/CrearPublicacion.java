@@ -1,17 +1,23 @@
 package lab4_19656499_Glochon.gui;
 
+import java.util.ArrayList;
 import javax.swing.event.EventListenerList;
+import lab4_19656499_Glochon.SocialNetwork;
+import lab4_19656499_Glochon.Usuario;
 
 /**
  *
  * @author EstebanGlochonUSACH [https://github.com/EstebanGlochonUSACH]
  */
 public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
+    
+    private final SocialNetwork socialNetwork;
 
     /**
      * Creates new form CrearPublicacion
      */
-    public CrearPublicacion() {
+    public CrearPublicacion(SocialNetwork socialNetwork) {
+        this.socialNetwork = socialNetwork;
         initComponents();
     }
 
@@ -29,6 +35,7 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton4 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel3.setText("Crear Publicacion");
@@ -46,6 +53,13 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
             }
         });
 
+        jButton1.setText("Publicar a Otros");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -58,7 +72,9 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -71,7 +87,9 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -84,16 +102,67 @@ public class CrearPublicacion extends javax.swing.JPanel implements Submitable {
             dialog.setVisible(true);
             return;
         }
-        
+
         jTextArea1.setText("");
-        
+
         SubmitEvent event = new SubmitEvent(this);
         event.fields.put("contenido", content);
         emitEvent(event);
     }//GEN-LAST:event_jButton4MouseClicked
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String content = jTextArea1.getText().trim();
+
+        if(content.length() == 0){
+            InfoDialog dialog = new InfoDialog(null, "El campo '"+ jLabel1.getText() +"' esta vacio!");
+            dialog.setVisible(true);
+            return;
+        }
+
+        if(socialNetwork.hasSesion()){
+            Usuario user = socialNetwork.getSesion();
+            ArrayList<Usuario> users = user.getContactos();
+            
+            if(users.size() > 0){
+                SeleccionarUsuarios dialog = new SeleccionarUsuarios(null, users);
+
+                CrearPublicacion self = this;
+                dialog.addListener(new SubmitEventListener() {
+                    @Override
+                    public void onSubmit(SubmitEvent evt) {
+                        InfoDialog dialog = new InfoDialog(null, "=> selected submit event <=");
+                        dialog.setVisible(true);
+
+                        if(!evt.fields.containsKey("usuarios")) return;
+                        Usuario[] usuarios = (Usuario[])evt.fields.get("usuarios");
+                        jTextArea1.setText("");
+                        SubmitEvent event = new SubmitEvent(self);
+                        event.fields.put("contenido", content);
+                        event.fields.put("usuarios", usuarios);
+                        emitEvent(event);
+                    }
+                });
+
+                dialog.setVisible(true);
+            }
+            else{
+                jTextArea1.setText("");
+                SubmitEvent event = new SubmitEvent(this);
+                event.fields.put("contenido", content);
+                emitEvent(event);
+            }
+        }
+        else{
+            jTextArea1.setText("");
+            SubmitEvent event = new SubmitEvent(this);
+            event.fields.put("contenido", content);
+            emitEvent(event);
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

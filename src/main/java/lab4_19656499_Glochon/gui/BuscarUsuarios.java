@@ -35,6 +35,11 @@ public class BuscarUsuarios extends javax.swing.JPanel implements Submitable {
         jLabel2.setText("Nombre de Usuario");
 
         jButton1.setText("Buscar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -65,6 +70,22 @@ public class BuscarUsuarios extends javax.swing.JPanel implements Submitable {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String query = jTextField1.getText().trim();
+
+        if(query.length() == 0){
+            InfoDialog dialog = new InfoDialog(null, "El campo '"+ jLabel2.getText() +"' esta vacio!");
+            dialog.setVisible(true);
+            return;
+        }
+        
+        jTextField1.setText("");
+        
+        SubmitEvent event = new SubmitEvent(this);
+        event.fields.put("busqueda", query);
+        emitEvent(event);
+    }//GEN-LAST:event_jButton1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

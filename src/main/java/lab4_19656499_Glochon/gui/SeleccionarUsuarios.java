@@ -2,7 +2,6 @@ package lab4_19656499_Glochon.gui;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 import javax.swing.event.EventListenerList;
 import lab4_19656499_Glochon.Usuario;
 
@@ -12,41 +11,31 @@ import lab4_19656499_Glochon.Usuario;
  */
 public class SeleccionarUsuarios extends javax.swing.JDialog implements Submitable {
     
-    private Usuario[] usuarios;
+    private final Usuario[] usuarios;
+    private final String[] userStrings;
 
     /**
      * Creates new form SeleccionarUsuarios
+     * @param parent
+     * @param users
      */
     public SeleccionarUsuarios(java.awt.Frame parent, Collection<Usuario> users) {
         super(parent, true);
-        initComponents();
         
         Iterator<Usuario> iter = users.iterator();
         usuarios = new Usuario[users.size()];
+        userStrings = new String[users.size()];
         Usuario aux;
         int i = 0;
         
         while(iter.hasNext()){
             aux = iter.next();
             usuarios[i] = aux;
+            userStrings[i] = aux.toString();
             ++i;
         }
-    }
 
-    public SeleccionarUsuarios(java.awt.Frame parent, LinkedList<Usuario> users) {
-        super(parent, true);
         initComponents();
-        
-        Iterator<Usuario> iter = users.iterator();
-        usuarios = new Usuario[users.size()];
-        Usuario aux;
-        int i = 0;
-        
-        while(iter.hasNext()){
-            aux = iter.next();
-            usuarios[i] = aux;
-            ++i;
-        }
     }
 
     /**
@@ -68,11 +57,8 @@ public class SeleccionarUsuarios extends javax.swing.JDialog implements Submitab
         labelTitulo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         labelTitulo.setText("Seleccionar Usuarios");
 
-        String[] strings = new String[usuarios.length];
-        for(int i = 0; i < usuarios.length; ++i){
-            strings[i] = usuarios[i].toString();
-        }
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = userStrings;
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -115,6 +101,8 @@ public class SeleccionarUsuarios extends javax.swing.JDialog implements Submitab
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        setVisible(false);
+        
         int[] indices = jList1.getSelectedIndices();
         Usuario[] users = new Usuario[indices.length];
         int index;
@@ -124,13 +112,9 @@ public class SeleccionarUsuarios extends javax.swing.JDialog implements Submitab
             users[i] = usuarios[index];
         }
         
-        setVisible(false);
-        
         SubmitEvent event = new SubmitEvent(this);
         event.fields.put("usuarios", users);
         emitEvent(event);
-        
-        dispose();
     }//GEN-LAST:event_jButton1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
