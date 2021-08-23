@@ -1,6 +1,7 @@
 package lab4_19656499_Glochon;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -50,6 +51,34 @@ public class Usuario extends AutoIncrementable {
      */
     public LocalDate getFechaCreacion() {
         return fechaCreacion;
+    }
+
+    /**
+     * Selector para obtener una lista de los followers y followings.
+     * @return Collection(Usuario)
+     */
+    public ArrayList<Usuario> getContactos() {
+        ArrayList<Usuario> contactos = new ArrayList<>();
+        
+        Iterator<Usuario> iter = followers.iterator();
+        Usuario aux;
+        
+        while(iter.hasNext()){
+            aux = iter.next();
+            if(!contactos.contains(aux)){
+                contactos.add(aux);
+            }
+        }
+        
+        iter = following.iterator();
+        while(iter.hasNext()){
+            aux = iter.next();
+            if(!contactos.contains(aux)){
+                contactos.add(aux);
+            }
+        }
+        
+        return contactos;
     }
 
     /**
